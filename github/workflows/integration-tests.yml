@@ -1,0 +1,60 @@
+name: Integration Tests with Service Containers
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  integration-tests:
+    runs-on: ubuntu-latest
+
+    # TODO: Add a services: section with two containers
+    #
+    # services:
+    #   postgres:
+    #     image: ???
+    #     env:
+    #       POSTGRES_USER: ???
+    #       POSTGRES_PASSWORD: ???
+    #       POSTGRES_DB: ???
+    #     ports:
+    #       - ???
+    #     options: >-
+    #       --health-cmd="???"
+    #       --health-interval=10s
+    #       --health-timeout=5s
+    #       --health-retries=5
+    #
+    #   redis:
+    #     image: ???
+    #     ports:
+    #       - ???
+    #     options: >-
+    #       --health-cmd="???"
+    #       --health-interval=10s
+    #       --health-timeout=5s
+    #       --health-retries=5
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - run: npm ci
+
+      # TODO: Add a step that initializes the database schema
+      # - Use: psql -f src/schema.sql
+      # - Set variables: PGHOST, PGPORT, PGUSER, PGPASSWORD, PGDATABASE
+      # - Install postgresql-client if needed:
+      #   sudo apt-get update && sudo apt-get install -y postgresql-client
+
+      # TODO: Add a step that runs the integration tests
+      # - Command: npm run test:integration
+      # - Environment variables:
+      #   DATABASE_URL: postgresql://<user>:<pass>@localhost:5432/<db>
+      #   REDIS_URL: redis://localhost:6379
